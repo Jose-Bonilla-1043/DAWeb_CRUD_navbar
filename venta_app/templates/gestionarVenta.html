@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block cuerpo %}
+{% load static %}
+<div class="row">
+  <!-- La columna izquierda -->
+  <div class="col-sm-12 col-md-4 col-lg-4 xl-4">
+    <h1>Registrar Ventas</h1>
+    <div class="card">
+      <div class="card-body">
+        <form action="{% url 'registrarVenta' %}" method="POST">
+          {% csrf_token %}
+          
+          <!-- Campo para el código del inventario -->
+          <div class="form-group">
+            <input type="text" id="txtid_venta" name="txtid_venta" class="form-control"
+                   placeholder="Código" minlength="1" maxlength="6" required>
+          </div>
+
+          <!-- Campo para la cantidad actual -->
+          <div class="form-group py-3">
+            <input type="date" id="datefecha" name="datefecha" class="form-control"
+                   placeholder="Fecha" maxlength="100" required>
+          </div>
+
+          <!-- Campo para la cantidad mínima -->
+          <div class="form-group py-2">
+            <input type="text" id="txtestado" name="txtestado" class="form-control"
+                   min="1" max="100" required placeholder="Estado">
+          </div>
+
+          <!-- Campo para la fecha de actualización -->
+          <div class="form-group py-3">
+            <input type="number" id="numcantidad" name="numcantidad" class="form-control"
+                   placeholder="Cantidad" required>
+          </div>
+
+          <!-- Campo para la ubicación -->
+          <div class="form-group py-2">
+            <input type="text" id="numprecio" name="numprecio" class="form-control"
+                   placeholder="Precio" maxlength="100" required>
+          </div>
+
+          <!-- Campo para el historial -->
+          <div class="form-group py-3">
+            <input type="text" id="txtid_producto" name="txtid_producto" class="form-control"
+                   placeholder="Id Producto" maxlength="255">
+          </div>
+
+          <div class="form-group py-3">
+            <input type="text" id="txtid_empleado" name="txtid_empleado" class="form-control"
+                   placeholder="Id Empleado" maxlength="255">
+          </div>
+
+          <div class="form-group py-3">
+            <input type="text" id="txtid_cliente" name="txtid_cliente" class="form-control"
+                   placeholder="Id Cliente" maxlength="255">
+          </div>
+
+          <!-- Botón de envío -->
+          <div class="form-group py-2">
+            <button type="submit" class="btn btn-primary">Guardar venta</button>
+          </div>
+        </form>
+      </div>
+    </div>      
+  </div>
+
+  <!-- La columna derecha -->
+  <div class="col-sm-12 col-md-8 col-lg-8 xl-8">
+    <h1>Listado Ventas</h1>
+    <img class="w-50" src="{% static 'img/venta.jpg' %}" alt="bonilla" width="100" height="200">
+    <!-- Tabla -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Id Venta</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Precio Total</th>
+          <th scope="col">Id Producto</th>
+          <th scope="col">Id Empleado</th>
+          <th scope="col">Id Cliente</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for v in lasventas %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ v.id_venta }}</td>
+          <td>{{ v.fecha | date:'d-m-y'}}</td>
+          <td>{{ v.estado }}</td>
+          <td>{{ v.cantidad }}</td>
+          <td>{{ v.precio_total }}</td>
+          <td>{{ v.id_producto }}</td>
+          <td>{{ v.id_empleado }}</td>
+          <td>{{ v.id_cliente }}</td>
+          <td>
+            <!-- Enlaces a editar y borrar -->
+            <a href="{% url 'seleccionarVenta' v.id_venta %}" class="btn btn-info">Editar</a>
+            <a href="{% url 'borrarVenta' v.id_venta %}" class="btn btn-danger">Borrar</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
