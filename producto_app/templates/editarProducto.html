@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block cuerpo %}
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Editar Producto</h2>
+        <!-- Tarjeta -->
+        <div class="card">
+            <div class="card-body">
+              <form action="/editarProducto/" method="POST"> {% csrf_token %}
+              <!-- Campo para el código del inventario -->
+            <div class="form-group">
+              <input type="text" id="txtid_producto" name="txtid_producto" class="form-control"
+                     minlength="1" maxlength="6" value="{{ elproducto.id_producto }}" readonly required>
+            </div>
+      
+            <!-- Campo para la cantidad actual -->
+            <div class="form-group py-3">
+              <input type="text" id="txtnombre" name="txtnombre" class="form-control"
+                    max="100"  value="{{elproducto.nombre}}"  required>
+            </div>
+      
+            <!-- Campo para la cantidad mínima -->
+            <div class="form-group py-2">
+              <input type="text" id="txtdescripcion" name="txtdescripcion" class="form-control"
+                     max="100"  value="{{elproducto.descripcion}}" required >
+            </div>
+      
+            <!-- Campo para la fecha de actualización -->
+            <div class="form-group py-3">
+              <input type="text" id="txttamano" name="txttamano" class="form-control"
+                     value="{{elproducto.tamano}}" required>
+            </div>
+      
+            <!-- Campo para la ubicación -->
+            <div class="form-group py-2">
+              <input type="text" id="txtcolor" name="txtcolor" class="form-control"
+                   value="{{elproducto.color}}" max="100" required>
+            </div>
+      
+            <!-- Campo para el historial -->
+            <div class="form-group py-3">
+              <input type="num" id="numprecio" name="numprecio" class="form-control"
+                    value="{{elproducto.precio}}" max="5000">
+            </div>
+
+            <div class="form-group py-3">
+                <input type="text" id="txtmarca" name="txtmarca" class="form-control"
+                      value="{{elproducto.marca}}" max="255">
+              </div>
+
+                <!-- Botón para guardar los cambios -->
+                <div class="form-group py-2">
+                  <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </div>
+
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
