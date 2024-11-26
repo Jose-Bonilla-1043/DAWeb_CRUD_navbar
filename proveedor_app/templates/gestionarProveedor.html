@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block cuerpo %}
+{% load static %}
+<div class="row">
+  <!-- La columna izquierda -->
+  <div class="col-sm-12 col-md-4 col-lg-4 xl-4">
+    <h1>Registrar Proveedor</h1>
+    <div class="card">
+        <div class="card-body">
+          <form action="registrarProveedor/" method="POST">
+            {% csrf_token %}
+            
+            <!-- Campo para el código del inventario -->
+            <div class="form-group">
+              <input type="text" id="txtid_proveedor" name="txtid_proveedor" class="form-control"
+                     placeholder="Código" minlength="1" maxlength="6" required>
+            </div>
+      
+            <!-- Campo para la cantidad actual -->
+            <div class="form-group py-3">
+              <input type="text" id="txtnombre" name="txtnombre" class="form-control"
+                     placeholder="nombre" maxlength="100" required>
+            </div>
+      
+            <!-- Campo para la cantidad mínima -->
+            <div class="form-group py-2">
+              <input type="text" id="txtcontacto" name="txtcontacto" class="form-control"
+                     min="1" max="100" required placeholder="contacto">
+            </div>
+      
+            <!-- Campo para la fecha de actualización -->
+            <div class="form-group py-3">
+              <input type="text" id="txttelefono" name="txttelefono" class="form-control"
+              placeholder="telefono" required>
+            </div>
+      
+            <!-- Campo para la ubicación -->
+            <div class="form-group py-2">
+              <input type="text" id="txtdireccion" name="txtdireccion" class="form-control"
+                     placeholder="direccion" maxlength="100" required>
+            </div>
+      
+            <!-- Campo para el historial -->
+            <div class="form-group py-3">
+              <input type="text" id="txtciudad" name="txtciudad" class="form-control"
+                     placeholder="Ciudad" maxlength="255">
+            </div>
+      
+            <!-- Botón de envío -->
+            <div class="form-group py-2">
+              <button type="submit" class="btn btn-primary">Guardar Proveedor</button>
+            </div>
+          </form>
+        </div>
+      </div>      
+    </div>
+
+  <!-- La columna derecha -->
+  <div class="col-sm-12 col-md-8 col-lg-8 xl-8">
+    <h1>Listado Proveedor</h1>
+    <img class="w-50" src="{% static 'img/prov.jpg' %}" alt="bonilla" width="100" height="200">
+    <!-- Tabla -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Id Proveedor</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Contacto</th>
+          <th scope="col">Telefono</th>
+          <th scope="col">Direccion</th>
+          <th scope="col">Ciudad</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pr in elproveedor %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ pr.id_proveedor }}</td>
+          <td>{{ pr.nombre }}</td>
+          <td>{{ pr.contacto }}</td>
+          <td>{{ pr.telefono }}</td>
+          <td>{{ pr.direccion }}</td>
+          <td>{{ pr.ciudad }}</td>
+          <td><a href="seleccionarProveedor/{{ pr.id_proveedor }}" class="btn btn-info">Editar</a></td> 
+          <td><a href="borrarProveedor/{{ pr.id_proveedor }}" class="btn btn-danger">Borrar</a></td> 
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
