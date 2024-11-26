@@ -1,0 +1,96 @@
+<!--Falta modificar-->
+
+{% extends "base.html" %}
+
+{% block cuerpo %}
+{% load static %}
+<div class="row">
+  <!-- La columna izquierda -->
+  <div class="col-sm-12 col-md-4 col-lg-4 xl-4">
+    <h1>Registrar Cliente</h1>
+    <div class="card">
+        <div class="card-body">
+          <form action="registrarCliente/" method="POST">
+            {% csrf_token %}
+            
+              <!-- Campo para el código del empleado -->
+              <div class="form-group">
+                <input type="text" id="txtid_cliente" name="txtid_cliente" class="form-control"
+                placeholder="Código único del cliente"  minlength="1" maxlength="6"  required>
+              </div>
+        
+              <!-- Campo para la cantidad actual -->
+              <div class="form-group py-3">
+                <input type="text" id="txtnombre" name="txtnombre" class="form-control"
+                placeholder="Nombre" max="100"   required>
+              </div>
+        
+              <!-- Campo para la cantidad mínima -->
+              <div class="form-group py-2">
+                <input type="txt" id="txtapellido" name="txtapellido" class="form-control"
+                placeholder="Apellido"  max="100" required >
+              </div>
+        
+              <!-- Campo para la fecha de actualización -->
+              <div class="form-group py-3">
+                <input type="text" id="txtemail" name="txtemail" class="form-control"
+                placeholder="Email" max="100" required>
+              </div>
+        
+              <!-- Campo para la ubicación -->
+              <div class="form-group py-2">
+                <input type="num" id="txttelefono" name="txttelefono" class="form-control"
+                placeholder="Telefono"  max="100" required>
+              </div>
+        
+              <!-- Campo para el historial -->
+              <div class="form-group py-3">
+                <input type="text" id="txtdireccion" name="txtdireccion" class="form-control"
+                placeholder="Direccion"  max="255" required>
+              </div>
+      
+            <!-- Botón de envío -->
+            <div class="form-group py-2">
+              <button type="submit" class="btn btn-primary">Guardar cliente</button>
+            </div>
+          </form>
+        </div>
+      </div>      
+    </div>
+
+  <!-- La columna derecha -->
+  <div class="col-sm-12 col-md-8 col-lg-8 xl-8">
+    <h1>Listado Clientes</h1>
+    <img class="w-50" src="{% static 'img/cliente.jpg' %}" alt="bonilla" width="100" height="200">
+    <!-- Tabla -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Id Cliente</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Email</th>
+          <th scope="col">Telefono</th>
+          <th scope="col">Direccion</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in losclientes %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ c.id_cliente }}</td>
+          <td>{{ c.nombre }}</td>
+          <td>{{ c.apellido }}</td>
+          <td>{{ c.email }}</td>
+          <td>{{ c.telefono }}</td>
+          <td>{{ c.direccion }}</td>
+          <td><a href="seleccionarCliente/{{ c.id_cliente }}" class="btn btn-info">Editar</a></td> 
+          <td><a href="borrarCliente/{{ c.id_cliente }}" class="btn btn-danger">Borrar</a></td> 
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
