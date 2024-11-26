@@ -1,0 +1,96 @@
+<!--Falta modificar-->
+{% extends "base.html" %}
+
+{% block cuerpo %}
+{% load static %}
+<div class="row">
+  <!-- La columna izquierda -->
+  <div class="col-sm-12 col-md-4 col-lg-4 xl-4">
+    <h1>Registrar Empleado</h1>
+    <div class="card">
+      <div class="card-body">
+        <form action="registrarEmpleado/" method="POST">
+          {% csrf_token %}
+          
+          <!-- Campo para el código del empleado -->
+          <div class="form-group">
+            <input type="text" id="txtid_empleado" name="txtid_empleado" class="form-control"
+            placeholder="Código único del empleado" minlength="1" maxlength="6"  required>
+          </div>
+    
+          <!-- Campo para el nombre -->
+          <div class="form-group py-3">
+            <input type="text" id="txtnombre" name="txtnombre" class="form-control"
+            placeholder="Nombre" maxlength="100"  required>
+          </div>
+    
+          <!-- Campo para el apellido -->
+          <div class="form-group py-2">
+            <input type="text" id="txtapellido" name="txtapellido" class="form-control"
+            placeholder="Apellido" maxlength="100"  required>
+          </div>
+    
+          <!-- Campo para el horario -->
+          <div class="form-group py-3">
+            <input type="text" id="datehorario" name="datehorario" class="form-control"
+            placeholder="Horario" required>
+          </div>
+    
+          <!-- Campo para el salario -->
+          <div class="form-group py-2">
+            <input type="number" id="numsalario" name="numsalario" class="form-control"
+            placeholder="Salario"  required>
+          </div>
+    
+          <!-- Campo para el teléfono -->
+          <div class="form-group py-3">
+            <input type="text" id="txttelefono" name="txttelefono" class="form-control"
+            placeholder="Telefono"  maxlength="255" required>
+          </div>
+      
+          <!-- Botón de envío -->
+          <div class="form-group py-2">
+            <button type="submit" class="btn btn-primary">Guardar empleado</button>
+          </div>
+        </form>
+      </div>
+    </div>      
+  </div>
+
+  <!-- La columna derecha -->
+  <div class="col-sm-12 col-md-8 col-lg-8 xl-8">
+    <h1>Listado de Empleados</h1>
+    <img class="w-50" src="{% static 'img/empleado.jpg' %}" alt="bonilla" width="100" height="200">
+    <!-- Tabla -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Id Empleado</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Horario</th>
+          <th scope="col">Salario</th>
+          <th scope="col">Teléfono</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in elempleado %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ e.id_empleado }}</td>
+          <td>{{ e.nombre }}</td>
+          <td>{{ e.apellido }}</td>
+          <td>{{ e.horario }}</td>
+          <td>{{ e.salario }}</td>
+          <td>{{ e.telefono }}</td>
+          <td><a href="seleccionarEmpleado/{{ e.id_empleado }}" class="btn btn-info">Editar</a></td> 
+          <td><a href="borrarEmpleado/{{ e.id_empleado }}" class="btn btn-danger">Borrar</a></td> 
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
